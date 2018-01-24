@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @pair.name %>
+</p>
+<% unless @pair.ticker.nil? %>
+  <p>
+    <strong>High:</strong>
+    <%= @pair.ticker.high %>
+  </p>
+  <p>
+    <strong>Low:</strong>
+    <%= @pair.ticker.low %>
+  </p>
+<% end %>
+<div>
+  <%= link_to 'Update Data', pair_ticker_path(@pair), method: :patch %>
+</div>
+<div>
+  <%= link_to 'Show History', pair_history_path(@pair) %>
+</div>
+<%= link_to 'Edit', edit_pair_path(@pair) %> |
+<%= link_to 'Back', pairs_path %>
