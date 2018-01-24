@@ -6,7 +6,13 @@ App.room = App.cable.subscriptions.create "TickerChannel",
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    document.getElementById(data.pair + '-last').innerText = data.last
-    document.getElementById(data.pair + '-high').innerText = data.high
-    document.getElementById(data.pair + '-low').innerText = data.low
+    la = document.getElementById(data.pair + '-last')
+    if (la)
+      la.innerText = data.last
+    hi = document.getElementById(data.pair + '-high')
+    if (hi)
+      hi.innerText = data.high
+    lo = document.getElementById(data.pair + '-low')
+    if (lo)
+      lo.innerText = data.low
     console.log(data)
