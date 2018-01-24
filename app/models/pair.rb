@@ -18,7 +18,7 @@ class Pair < ApplicationRecord
     candle_collection = candles.order(:mts).last(24)
     candle_collection.each do |c|
       data << [
-          Time.at(c.mts/1000).strftime("%H:%M"),
+          Time.at(c.mts/1000).strftime("%d.%m.%Y"),
           c.low,
           c.open,
           c.close,

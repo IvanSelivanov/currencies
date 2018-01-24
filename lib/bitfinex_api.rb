@@ -17,9 +17,10 @@ module App
     end
 
     def update_candles
-      start = DateTime.now.prev_day.at_beginning_of_day.to_time.to_i*1000
+#      start = DateTime.now.prev_day.at_beginning_of_day.to_time.to_i*1000
       finish = DateTime.now.prev_day.at_end_of_day.to_time.to_i*1000
-      endpoint = "https://api.bitfinex.com/v2/candles/trade:1h:#{name}/hist?start=#{start}&end=#{finish}"
+#      endpoint = "https://api.bitfinex.com/v2/candles/trade:1D:#{name}/hist?start=#{start}&end=#{finish}"
+      endpoint = "https://api.bitfinex.com/v2/candles/trade:1D:#{name}/hist?limit=10&end=#{finish}"
       data = self.class.api_request(endpoint)
       data.each do |c|
         candles.find_or_create_by mts: c[0], open: c[1], close: c[2], high: c[3], low: c[4]
