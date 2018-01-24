@@ -21,44 +21,6 @@ module Bitfinex
       ws_reset_channels
     end
 
-    def ws_auth(&block)
-      unless @ws_auth
-        nonce = (Time.now.to_f * 10_000).to_i.to_s
-        sub_id = add_callback(&block)
-        save_channel_id(sub_id,0)
-        if config.api_version == 1
-          payload = 'AUTH' + nonce
-          signature = sign(payload)
-          ws_safe_send({
-                           apiKey: config.api_key,
-                           authSig: sign(payload),
-                           authPayload: payload,
-                           subId: sub_id.to_s,
-                           event: 'auth'
-                       })
-        else
-          payload = 'AUTH' + nonce + nonce
-          signature = sign(payload)
-          ws_safe_send({
-                           apiKey: config.api_key,
-                           authSig: sign(payload),
-                           authPayload: payload,
-                           authNonce: nonce,
-                           subId: sub_id.to_s,
-                           event: 'auth'
-                       })
-        end
-        @ws_auth = true
-      end
-    end
-
-    def ws_unauth
-      ws_safe_send({event: 'unauth'})
-    end
-
-    def ticker(symbol = "btcusd")
-      get("pubticker/#{symbol}").body
-    end
 
     # Call the specified block passing tickers, it uses websocket
     #
@@ -110,12 +72,6 @@ module Bitfinex
           @c_counter += 1
         end
         id
-      end
-
-      def register_authenticated_channel(msg, &block)
-        sub_id = add_callback(&block)
-        msg.merge!(subId: sub_id.to_s)
-        ws_safe_send(msg.merge(event:'subscribe'))
       end
 
       def ws_safe_send(msg)
@@ -170,7 +126,8 @@ module Bitfinex
       class WSClient
         def initialize(options = {})
           # set some defaults
-          @url = 'wss://api.bitfinex.com/ws'
+          @url = 'wss://api.bitfinex.com/ws/2'
+
           @reconnect = true
           @reconnect_after = 30
           @stop = false
@@ -248,9 +205,7 @@ module Bitfinex
   class Client
     include Bitfinex::WebsocketConnection
 
-
     def initialize
-
       @mutex = Mutex.new
       @c_counter = 1
     end

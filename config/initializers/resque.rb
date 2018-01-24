@@ -1,0 +1,1 @@
+Resque.enqueue(ApplicationJob, 'tBTCUSD')
