@@ -15,7 +15,7 @@ class Pair < ApplicationRecord
 
   def chart_data
     data = []
-    candle_collection = candles.order(:mts).last(24)
+    candle_collection = candles.order(:mts).last(30)
     candle_collection.each do |c|
       data << [
           Time.at(c.mts/1000).strftime("%d.%m.%Y"),
