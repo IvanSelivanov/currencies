@@ -128,7 +128,7 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    redis (4.0.1)
+    redis (3.3.5)
     redis-namespace (1.6.0)
       redis (>= 3.0.4)
     resque (1.27.4)
@@ -220,7 +220,7 @@ DEPENDENCIES
   pg (~> 0.18)
   puma (~> 3.7)
   rails (~> 5.1.4)
-  redis
+  redis (~> 3.0)
   resque
   rspec-rails
   sass-rails (~> 5.0)

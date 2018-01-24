@@ -16,6 +16,7 @@ class ApplicationJob
       end
 
       puts "Last Price: #{data[6]}\t High: #{data[8]}\t Low: #{data[9]}"
+      ActionCable.server.broadcast 'ticker_channel',  pair: pair, high: data[8], low: data[9], last: data[6]
     end
 
     puts "Bitfinex Ticker Price for #{pair}:"

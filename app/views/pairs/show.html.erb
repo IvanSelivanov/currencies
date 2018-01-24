@@ -7,15 +7,15 @@
 <% unless @pair.ticker.nil? %>
   <p>
     <strong>High:</strong>
-    <%= @pair.ticker.high %>
+    <span id="<%= @pair.name %>-high"><%= @pair.ticker.high %></span>
   </p>
   <p>
     <strong>Low:</strong>
-    <%= @pair.ticker.low %>
+    <span id="<%= @pair.name %>-low"><%= @pair.ticker.low %></span>
   </p>
   <p>
     <strong>Last:</strong>
-    <%= @pair.ticker.last %>
+    <span id="<%= @pair.name %>-last"><%= @pair.ticker.last %></span>
   </p>
 <% end %>
 <div>
