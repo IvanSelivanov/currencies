@@ -9,6 +9,8 @@ class Pair < ApplicationRecord
   has_one :ticker, dependent: :destroy
   has_many :candles, dependent: :destroy
 
+  after_create :launch_watcher
+
   def candles_old?
     Time.at(candles.order(:mts).last.mts/1000)<1.hour.before(DateTime.now.prev_day.at_end_of_day)
   end
@@ -33,5 +35,9 @@ class Pair < ApplicationRecord
     data_table.new_column('number', 'max')
     data_table.add_rows(data)
     data_table
+  end
+
+  def launch_watcher
+    TickersWorker.perform_async name
   end
 end
